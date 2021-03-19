@@ -27,28 +27,46 @@ namespace ConsoleUI
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
 
-            foreach (var product in productManager.GetAll())
+            //foreach (var product in productManager.GetAll())
+            //{
+            //    Console.WriteLine(product.ProductName + " : " + product.UnitPrice);
+            //}
+
+            //Console.WriteLine("\n-------Products With CategoryId value of '1' Listing--------\n");
+            //foreach (var product in productManager.GetAllByCategoryId(1))
+            //{
+            //    Console.WriteLine(product.ProductName + " : " + product.UnitPrice);
+            //}
+
+            //Console.WriteLine("\n--------Unit Price Between 10 and 100--------\n");
+            //foreach (var product in productManager.GetByUnitPrice(40, 100))
+            //{
+            //    Console.WriteLine(product.ProductName + " : " + product.UnitPrice);
+            //}
+
+            //Console.WriteLine("\n-------- Product ile Category join edilmiş hal ------------\n");
+            //foreach (var product in productManager.GetProductDetails())
+            //{
+            //    Console.WriteLine(product.ProductName + " : " + product.CategoryName);
+            //}
+
+            Console.WriteLine("\n-------- Kurumsal mimari ------------\n");
+
+            var result = productManager.GetProductDetails();
+
+            if (result.Success==true)
             {
-                Console.WriteLine(product.ProductName + " : " + product.UnitPrice);
+                foreach (var product in result.Data)
+                {
+                    Console.WriteLine(product.ProductName + " : " + product.CategoryName);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
 
-            Console.WriteLine("\n-------Products With CategoryId value of '1' Listing--------\n");
-            foreach (var product in productManager.GetAllByCategoryId(1))
-            {
-                Console.WriteLine(product.ProductName + " : " + product.UnitPrice);
-            }
-
-            Console.WriteLine("\n--------Unit Price Between 10 and 100--------\n");
-            foreach (var product in productManager.GetByUnitPrice(40, 100))
-            {
-                Console.WriteLine(product.ProductName + " : " + product.UnitPrice);
-            }
-
-            Console.WriteLine("\n-------- Product ile Category join edilmiş hal ------------\n");
-            foreach (var product in productManager.GetProductDetails())
-            {
-                Console.WriteLine(product.ProductName + " : " + product.CategoryName);
-            }
+            
         }
     }
 }
