@@ -32,13 +32,13 @@ namespace Business.Concrete
             _categoryService = categoryService;
         }
 
-        [SecuredOperation("product.add,admin")]
+        //[SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))]
         [CacheRemoveAspect("IProductService.Get")]
         public IResult Add(Product product)
         {
             //İş kodları yazılır..  
-            IResult result = BusinessRules.Run(CheckIfProductCountOfCategoryCorrect(product.CategoryId),
+            IResult result = BusinessRules.Run(/*CheckIfProductCountOfCategoryCorrect(product.CategoryId),*/
                 CheckIfProductNameExists(product.ProductName), CheckIfCategoryLimitedExceded());
 
             if (result != null)
@@ -97,15 +97,15 @@ namespace Business.Concrete
             throw new NotImplementedException();
         }
 
-        private IResult CheckIfProductCountOfCategoryCorrect(int categoryId)
-        {
-            var result = _productDal.GetAll(p => p.CategoryId == categoryId).Count;
-            if (result >= 10)
-            {
-                return new ErrorResult(Messages.ProductCountOfCategoryError);
-            }
-            return new SuccessResult();
-        }
+        //private IResult CheckIfProductCountOfCategoryCorrect(int categoryId)
+        //{
+        //    var result = _productDal.GetAll(p => p.CategoryId == categoryId).Count;
+        //    if (result >= 10)
+        //    {
+        //        return new ErrorResult(Messages.ProductCountOfCategoryError);
+        //    }
+        //    return new SuccessResult();
+        //}
 
         private IResult CheckIfProductNameExists(string productName)
         {
